@@ -20,3 +20,32 @@ class BookRepository(BookRepositoryProtocol):
 
     def find_book_by_name(self, query) -> Book:
         return [b for b in self.get_all_books() if b.title == query]
+    
+
+    def delete_book_by_name(self, book_id: str) -> bool:
+
+        books = self.get_all_books()
+
+        new_books = [b for b in books if b.book_id != book_id]
+
+        if len(new_books) == len(books):
+            return False
+    
+        with open(self.filepath, 'w', encoding='utf-8') as f:
+            json.dump([b.to_dict() for b in new_books], f, indent=2)
+
+        return True
+
+    def update_book(self, old_id: str, updated: Book) -> bool:
+        
+        books = self.get_all_books()
+        counter = 0
+        for book in books:
+            if book.book_id == old_id:
+                books[counter] = updated
+                with open(self.filepath, 'w', encoding='utf-8') as f:
+                    json.dump([b.to_dict() for b in books], f, indent=2)
+                return True
+            
+            counter += 1
+        return False

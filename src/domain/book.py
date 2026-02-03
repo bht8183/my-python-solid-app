@@ -17,7 +17,6 @@ class Book:
     format: Optional[str] = None
     in_print: Optional[bool] = None
     sales_millions: Optional[float] = None
-    last_checkout: Optional[str] = None
     available: Optional[bool] = None
     book_id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
@@ -51,6 +50,5 @@ class Book:
             "format": self.format,
             "in_print": self.in_print,
             "sales_millions": self.sales_millions,
-            "last_checkout": self.last_checkout,
             "available": self.available
         }

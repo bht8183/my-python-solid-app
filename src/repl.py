@@ -27,8 +27,12 @@ class BookREPL:
             self.find_book_by_name()
         elif cmd == 'getJoke':
             self.get_joke()
+        elif cmd == 'deleteBook':
+            self.delete_book()
+        elif cmd == 'updateBook':
+            self.update_book()
         elif cmd == 'help':
-            print('Available commands: addBook, getAllRecords, findByName, getJoke, help, exit')
+            print('Available commands: addBook, getAllRecords, findByName, getJoke, deleteBook, help, exit')
         else:
             print('Please use a valid command!')
 
@@ -64,6 +68,39 @@ class BookREPL:
             print(new_book_id)
         except Exception as e:
             print(f'An unexpected error has occurred: {e}')
+        
+    def delete_book(self):
+        try:
+            print('Enter Book name:')
+            name = input('Book name: ')
+
+            book = self.book_svc.find_book_by_name(name)
+
+            result = self.book_svc.delete_book_by_name(book.book_id)
+            if result:
+                print(f'book {book.book_id} has been deleted')
+        except Exception as e:
+            print(f'An unexpected error has occurred: {e}')
+    
+    def update_book(self):
+        try:
+            book_id = input("Book ID to update: ").strip()
+
+            title = input("New title: ").strip()
+            author = input("New author: ").strip()
+
+            new_book = Book(book_id=book_id, title=title, author=author)
+
+            updated = self.book_svc.update_book(book_id,new_book)
+
+            if updated:
+                print("book updated")
+        
+        except Exception as e:
+            print(f'An unexpected error has occurred: {e}')
+
+
+
 
 if __name__ == '__main__':
     generate_books()

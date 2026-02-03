@@ -1,4 +1,4 @@
-from .book_generator_service import generate_books_json as generate_books
+from .book_generator_service_V2 import generate_books_json as generate_books
 from .book_service import BookService
 
 __all__ = ['generate_books']
