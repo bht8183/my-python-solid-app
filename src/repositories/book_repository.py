@@ -49,3 +49,37 @@ class BookRepository(BookRepositoryProtocol):
             
             counter += 1
         return False
+    
+    def check_out_book(self, book_id: str) -> bool:
+        books = self.get_all_books()
+
+        for i, book in enumerate(books):
+            if book.book_id == book_id:
+                book.check_out()
+
+                # Persist changes
+                books[i] = book
+                with open(self.filepath, "w", encoding="utf-8") as f:
+                    json.dump([b.to_dict() for b in books], f, indent=2)
+
+                return True
+
+        # book not found lol
+        return False
+    
+    def check_in_book(self, book_id: str) -> bool:
+        books = self.get_all_books()
+
+        for i, book in enumerate(books):
+            if book.book_id == book_id:
+      
+                book.check_in()
+
+                # Persist changes
+                books[i] = book
+                with open(self.filepath, "w", encoding="utf-8") as f:
+                    json.dump([b.to_dict() for b in books], f, indent=2)
+
+                return True
+
+        return False

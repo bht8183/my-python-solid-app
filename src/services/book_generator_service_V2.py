@@ -76,7 +76,6 @@ def generate_books_json(filename='books.json', count=500, seed=None):
 
         random_days = int(rng.integers(0, 183))
         random_seconds = int(rng.integers(0, 80000))
-        last_checkout = six_months_ago + timedelta(days=random_days, seconds=random_seconds)
 
         idx = i - 1
         books.append(
